@@ -1,0 +1,6 @@
+{
+  "tags": [
+    { "name": "Teacher", "description": "Operations related to teacher management" },
+    { "name": "posts", "description": "Operations related to blog posts" }
+  ]
+}
