@@ -1,0 +1,241 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "# Document of ESS-microservices APIs\n\nthere are no TOS at this moment, use at your own risk we take no responsibility",
+    "title": "ESS-microservices APIs",
+    "contact": {
+      "name": "John Doe",
+      "url": "http://john.doe.com",
+      "email": "john.doe@example.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    },
+    "version": "0.0.1"
+  },
+  "host": "localhost",
+  "basePath": "/v2",
+  "paths": {
+    "/teachers": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Teacher"
+        ],
+        "summary": "Create a teacher",
+        "operationId": "CreateTeacher",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "ID",
+            "name": "id",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "Name",
+            "name": "name",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "boolean",
+            "x-go-name": "IsFemale",
+            "name": "is_female",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "format": "date",
+            "x-go-name": "Birth",
+            "name": "birth",
+            "in": "query",
+            "required": true
+          },
+          {
+            "type": "string",
+            "x-go-name": "UniversityTeacherDegree",
+            "x-nullable": "true",
+            "name": "university_teacher_degree",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "x-go-name": "IsHeadOfDepartment",
+            "description": "description: nullable",
+            "name": "is_head_of_department",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "x-go-name": "IsHeadOfFaculty",
+            "name": "is_head_of_faculty",
+            "in": "query"
+          },
+          {
+            "type": "boolean",
+            "x-go-name": "IsActive",
+            "name": "is_active",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "DepartmentId",
+            "name": "department_id",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "teacher",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/TeacherModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/teachers/:id": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Teacher"
+        ],
+        "summary": "Get a teacher-form by id",
+        "operationId": "GetTeacherById",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "id of teacher need to return",
+            "name": "id",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "teacher",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/TeacherModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "DeletedAt": {
+      "$ref": "#/definitions/NullTime"
+    },
+    "NullTime": {
+      "description": "NullTime implements the [Scanner] interface so\nit can be used as a scan destination, similar to [NullString].",
+      "type": "object",
+      "title": "NullTime represents a [time.Time] that may be null.",
+      "properties": {
+        "Time": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "Valid": {
+          "type": "boolean"
+        }
+      },
+      "x-go-package": "database/sql"
+    },
+    "TeacherModel": {
+      "type": "object",
+      "properties": {
+        "birth": {
+          "type": "string",
+          "format": "date",
+          "x-go-name": "Birth"
+        },
+        "deleted_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "DeletedAt"
+        },
+        "department_id": {
+          "type": "string",
+          "x-go-name": "DepartmentId",
+          "x-property-value": "value"
+        },
+        "id": {
+          "type": "string",
+          "x-go-name": "ID"
+        },
+        "is_active": {
+          "type": "boolean",
+          "x-go-name": "IsActive"
+        },
+        "is_female": {
+          "type": "boolean",
+          "x-go-name": "IsFemale"
+        },
+        "is_head_of_department": {
+          "type": "boolean",
+          "x-go-name": "IsHeadOfDepartment"
+        },
+        "is_head_of_faculty": {
+          "type": "boolean",
+          "x-go-name": "IsHeadOfFaculty"
+        },
+        "name": {
+          "type": "string",
+          "x-go-name": "Name"
+        },
+        "university_teacher_degree": {
+          "type": "string",
+          "x-go-name": "UniversityTeacherDegree",
+          "x-nullable": true,
+          "example": "university_teacher_degree"
+        }
+      },
+      "x-go-name": "Teacher",
+      "x-go-package": "ESS-microservices/core/models"
+    }
+  },
+  "tags": [
+    {
+      "description": "Operations related to teacher management",
+      "name": "Teacher"
+    },
+    {
+      "description": "Operations related to blog posts",
+      "name": "posts"
+    }
+  ]
+}
