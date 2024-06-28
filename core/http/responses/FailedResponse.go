@@ -11,25 +11,3 @@ type ValidationError struct {
 	// in: body
 	Payload Body
 }
-
-// swagger:operation GET /users UserManagement listUsers
-//
-// Lists all users.
-//
-// This will show all available users.
-//
-// ---
-// consumes:
-// - application/json
-// produces:
-// - application/json
-// schemes:
-// - http
-// - https
-// responses:
-//   "200":
-//     description: A list of users
-//     schema:
-//       "$ref": "#/responses/usersResponse"
-// tags:
-// - User Management

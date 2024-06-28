@@ -13,6 +13,7 @@ func ConsoleLoggerMiddleware(context *gin.Context) {
 	context.Next()
 	duration := time.Since(start)
 	log.Printf("Request - Method: %s | Status: %d | Duration: %v", context.Request.Method, context.Writer.Status(), duration)
+	log.Println("===========================================================")
 }
 
 func FileLoggerMiddleware(context *gin.Context) {
@@ -20,5 +21,5 @@ func FileLoggerMiddleware(context *gin.Context) {
 	context.Next()
 	duration := time.Since(start)
 	fileName := "request_log_" + fmt.Sprintf("%02d", start.Year()) + "-" + fmt.Sprintf("%02d", int(start.Month())) + "-" + fmt.Sprintf("%02d", start.Day()) + ".log"
-	utils.WriteFile(fmt.Sprintf("Request - Method: %s | Status: %d | Duration: %v", context.Request.Method, context.Writer.Status(), duration), fileName, "./storage/logs/")
+	utils.WriteFile(fmt.Sprintf("Request - Method: %s | Status: %d | Duration: %v\n", context.Request.Method, context.Writer.Status(), duration), fileName, "./storage/logs/")
 }
