@@ -1,22 +1,21 @@
-### Building and running your application
+### Building and running your application on local
 
 When you're ready, start your application by running:
-`docker compose up --build`.
 
-Your application will be available at http://localhost:8000.
+`docker compose -f compose-local.yaml --env-file .env.local up -d --build`
 
-### Deploying your application to the cloud
+Stop your application by running:
 
-First, build your image, e.g.: `docker build -t myapp .`.
-If your cloud uses a different CPU architecture than your development
-machine (e.g., you are on a Mac M1 and your cloud provider is amd64),
-you'll want to build the image for that platform, e.g.:
-`docker build --platform=linux/amd64 -t myapp .`.
+`docker compose -f compose-local.yaml --env-file .env.local down`
 
-Then, push it to your registry, e.g. `docker push myregistry.com/myapp`.
 
-Consult Docker's [getting started](https://docs.docker.com/go/get-started-sharing/)
-docs for more detail on building and pushing.
+### Building and running your application on production
 
-### References
-* [Docker's Go guide](https://docs.docker.com/language/golang/)
+When you're ready, start your application by running:
+
+`docker compose -f compose-production.yaml --env-file .env.production up -d --build`
+
+Stop your application by running:
+
+`docker compose -f compose-production.yaml --env-file .env.production up down`
+
