@@ -4,13 +4,16 @@ import (
 	"ESS-microservices/core/controllers"
 	"ESS-microservices/core/repositories"
 	"ESS-microservices/database"
+	"ESS-microservices/database/drivers"
 	"github.com/gin-gonic/gin"
 	"os"
 )
 
 // swagger:route GET /teachers/:id
 func NewApiRoutes(router *gin.Engine) {
-	databaseConnection := database.Connection{}
+	databaseConnection := database.Connection{
+		Driver: &drivers.PostgresDriver{},
+	}
 	databaseConnection.Connect()
 
 	apiRouterGroup := router.Group("/api")
