@@ -1,18 +1,53 @@
 services:
-  server:
-    env_file:
-      - .env
+  app:
+    container_name: $SERVICE_NAME-service
     build:
       context: .
       dockerfile: Dockerfile-local
     #      target: final
+    env_file:
+      - .env.local
     restart: unless-stopped
+    depends_on:
+      - postgres
+    volumes:
+      - ./:/app
     ports:
       - 8080:8080
     networks:
-      - education-supporting-system_mariadb-network
+      - $POSTGRES_NETWORK_NAME
+
+  postgres:
+    container_name: ESS-postgres
+    image: postgres:alpine3.19
+    env_file:
+      - .env.local
+    #      target: final
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: $DB_USERNAME
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_DB: $DB_NAME
+    ports:
+      - 5432:5432
+    networks:
+      - $POSTGRES_NETWORK_NAME
+
+  adminer:
+    container_name: ESS-adminer-postgres
+    image: adminer:4.8.1
+    env_file:
+      - .env.local
+    restart: unless-stopped
+    ports:
+      - 8081:8080
+    depends_on:
+      - postgres
+    networks:
+      - $POSTGRES_NETWORK_NAME
 
 networks:
-  education-supporting-system_mariadb-network:
-    external: true
+  ESS-postgres-network:
+    name: $POSTGRES_NETWORK_NAME
+    driver: bridge
 
