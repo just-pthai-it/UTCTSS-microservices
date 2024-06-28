@@ -5,6 +5,7 @@ import (
 	"ESS-microservices/core/repositories"
 	"ESS-microservices/database"
 	"github.com/gin-gonic/gin"
+	"os"
 )
 
 // swagger:route GET /teachers/:id
@@ -12,15 +13,32 @@ func NewApiRoutes(router *gin.Engine) {
 	databaseConnection := database.Connection{}
 	databaseConnection.Connect()
 
-	teacherController := controllers.TeacherController{
-		TeacherRepository: repositories.TeacherRepository{
-			Connection: databaseConnection,
-		},
-	}
 	apiRouterGroup := router.Group("/api")
 	apiV1RouterGroup := apiRouterGroup.Group("/v1")
 	{
-		apiV1RouterGroup.GET("/teachers/:id", teacherController.GetById)
-		apiV1RouterGroup.POST("/teachers", teacherController.Create)
+		serviceName := os.Getenv("SERVICE_NAME")
+		if serviceName == "teacher" {
+			teacherController := controllers.TeacherController{
+				TeacherRepository: repositories.TeacherRepository{
+					Connection: databaseConnection,
+				},
+			}
+
+			apiV1RouterGroup.GET("/teachers/:id", teacherController.GetById)
+			apiV1RouterGroup.POST("/teachers", teacherController.Create)
+		}
+
+		if serviceName == "feedback" {
+			feedbackController := controllers.FeedbackController{
+				Repository: repositories.FeedbackRepository{
+					Connection: databaseConnection,
+				},
+			}
+
+			apiV1RouterGroup.GET("/feedback/:id", feedbackController.GetById)
+			apiV1RouterGroup.POST("/feedback", feedbackController.Create)
+			apiV1RouterGroup.GET("/feedback", feedbackController.GetMany)
+		}
+
 	}
 }
