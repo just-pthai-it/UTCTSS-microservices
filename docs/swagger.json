@@ -27,6 +27,143 @@
   "host": "localhost",
   "basePath": "/v2",
   "paths": {
+    "/feedback": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Feedback"
+        ],
+        "summary": "Get much feedback as pagination",
+        "operationId": "GetManyFeedBack",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "maximum number of feedback need to return",
+            "name": "limit",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "offset of feedback need to return",
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "type of feedback need to return",
+            "name": "type",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "decide list feedback need to return is bug or not",
+            "name": "is_bug",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "list of feedback",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/FeedbackModel"
+                  }
+                },
+                "limit": {
+                  "type": "integer"
+                },
+                "offset": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Feedback"
+        ],
+        "summary": "Create a feedback",
+        "operationId": "CreateFeedback",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateFeedbackFormRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "created feedback",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/FeedbackModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/feedback/{id}": {
+      "get": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Feedback"
+        ],
+        "summary": "Get a feedback by id",
+        "operationId": "GetFeedbackById",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "id of feedback need to return",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "feedback",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "$ref": "#/definitions/FeedbackModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/teachers": {
       "post": {
         "consumes": [
@@ -157,8 +294,89 @@
     }
   },
   "definitions": {
+    "CreateFeedbackFormRequest": {
+      "type": "object",
+      "required": [
+        "data",
+        "type",
+        "is_bug",
+        "account_id"
+      ],
+      "properties": {
+        "account_id": {
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "AccountId"
+        },
+        "data": {
+          "$ref": "#/definitions/FeedbackData"
+        },
+        "is_bug": {
+          "type": "boolean",
+          "x-go-name": "IsBug"
+        },
+        "type": {
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Type"
+        }
+      },
+      "x-go-package": "ESS-microservices/core/http/requests/feedback-form"
+    },
     "DeletedAt": {
       "$ref": "#/definitions/NullTime"
+    },
+    "FeedbackData": {
+      "type": "object",
+      "required": [
+        "title",
+        "content"
+      ],
+      "properties": {
+        "content": {
+          "type": "string",
+          "x-go-name": "Content"
+        },
+        "title": {
+          "type": "string",
+          "x-go-name": "Title"
+        }
+      },
+      "x-go-package": "ESS-microservices/core/models"
+    },
+    "FeedbackModel": {
+      "type": "object",
+      "properties": {
+        "account_id": {
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "AccountId"
+        },
+        "created_at": {
+          "type": "string",
+          "format": "date-time",
+          "x-go-name": "CreatedAt"
+        },
+        "data": {
+          "$ref": "#/definitions/FeedbackData"
+        },
+        "id": {
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "ID"
+        },
+        "is_bug": {
+          "type": "boolean",
+          "x-go-name": "IsBug"
+        },
+        "type": {
+          "type": "integer",
+          "format": "uint64",
+          "x-go-name": "Type"
+        }
+      },
+      "x-go-name": "Feedback",
+      "x-go-package": "ESS-microservices/core/models"
     },
     "NullTime": {
       "description": "NullTime implements the [Scanner] interface so\nit can be used as a scan destination, similar to [NullString].",
@@ -174,6 +392,20 @@
         }
       },
       "x-go-package": "database/sql"
+    },
+    "ResponseBody": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "x-go-name": "Data"
+        },
+        "message": {
+          "type": "string",
+          "x-go-name": "Message"
+        }
+      },
+      "x-go-name": "Body",
+      "x-go-package": "ESS-microservices/core/http/responses"
     },
     "TeacherModel": {
       "type": "object",
@@ -228,14 +460,12 @@
       "x-go-package": "ESS-microservices/core/models"
     }
   },
-  "tags": [
-    {
-      "description": "Operations related to teacher management",
-      "name": "Teacher"
-    },
-    {
-      "description": "Operations related to blog posts",
-      "name": "posts"
+  "responses": {
+    "validationError": {
+      "description": "A ValidationError is an error that is used when the required input fails validation.",
+      "schema": {
+        "$ref": "#/definitions/ResponseBody"
+      }
     }
-  ]
+  }
 }
