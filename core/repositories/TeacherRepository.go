@@ -1,8 +1,8 @@
 package repositories
 
 import (
-	"ESS-microservices/core/models"
-	"ESS-microservices/database"
+	"TSS-microservices/core/models"
+	"TSS-microservices/database"
 )
 
 type TeacherRepository struct {

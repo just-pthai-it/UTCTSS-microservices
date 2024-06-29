@@ -1,4 +1,4 @@
-module ESS-microservices
+module TSS-microservices
 
 go 1.22
 

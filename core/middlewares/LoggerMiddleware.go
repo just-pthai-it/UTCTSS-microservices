@@ -1,7 +1,7 @@
 package middlewares
 
 import (
-	"ESS-microservices/utils"
+	"TSS-microservices/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"

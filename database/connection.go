@@ -1,7 +1,7 @@
 package database
 
 import (
-	"ESS-microservices/database/drivers"
+	"TSS-microservices/database/drivers"
 	"database/sql"
 	"fmt"
 	"gorm.io/gorm"

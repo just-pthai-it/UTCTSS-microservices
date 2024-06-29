@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"ESS-microservices/common"
-	feedback_form "ESS-microservices/core/http/requests/feedback-form"
-	"ESS-microservices/core/models"
-	"ESS-microservices/core/repositories"
+	"TSS-microservices/common"
+	feedback_form "TSS-microservices/core/http/requests/feedback-form"
+	"TSS-microservices/core/models"
+	"TSS-microservices/core/repositories"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
