@@ -1,12 +1,12 @@
 package feedback_tests
 
 import (
-	"ESS-microservices/core/controllers"
-	"ESS-microservices/core/models"
-	"ESS-microservices/core/repositories"
-	"ESS-microservices/core/routes"
-	"ESS-microservices/database"
-	"ESS-microservices/database/drivers"
+	"TSS-microservices/core/controllers"
+	"TSS-microservices/core/models"
+	"TSS-microservices/core/repositories"
+	"TSS-microservices/core/routes"
+	"TSS-microservices/database"
+	"TSS-microservices/database/drivers"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"

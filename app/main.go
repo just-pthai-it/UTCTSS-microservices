@@ -1,10 +1,10 @@
 package main
 
 import (
-	"ESS-microservices/core/middlewares"
-	"ESS-microservices/core/routes"
-	"ESS-microservices/database/migrations/tool"
-	_ "ESS-microservices/docs"
+	"TSS-microservices/core/middlewares"
+	"TSS-microservices/core/routes"
+	"TSS-microservices/database/migrations/tool"
+	_ "TSS-microservices/docs"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"os"

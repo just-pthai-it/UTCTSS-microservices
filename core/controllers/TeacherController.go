@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	teacher_form "ESS-microservices/core/http/requests/teacher-form"
-	"ESS-microservices/core/models"
-	"ESS-microservices/core/repositories"
+	teacher_form "TSS-microservices/core/http/requests/teacher-form"
+	"TSS-microservices/core/models"
+	"TSS-microservices/core/repositories"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"

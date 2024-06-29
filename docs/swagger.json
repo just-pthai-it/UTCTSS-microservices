@@ -11,21 +11,16 @@
   ],
   "swagger": "2.0",
   "info": {
-    "description": "# Document of ESS-microservices APIs\n\nthere are no TOS at this moment, use at your own risk we take no responsibility",
-    "title": "ESS-microservices APIs",
+    "description": "# Document of TSS-microservices APIs\n\nthere are no TOS at this moment, use at your own risk we take no responsibility",
+    "title": "TSS-microservices APIs temp",
     "contact": {
-      "name": "John Doe",
-      "url": "http://john.doe.com",
-      "email": "john.doe@example.com"
-    },
-    "license": {
-      "name": "MIT",
-      "url": "http://opensource.org/licenses/MIT"
+      "name": "Pham Hai",
+      "email": "pthai.it.210501@gmail.com"
     },
     "version": "0.0.1"
   },
   "host": "localhost",
-  "basePath": "/v2",
+  "basePath": "/api/v1",
   "paths": {
     "/feedback": {
       "get": {
@@ -321,7 +316,7 @@
           "x-go-name": "Type"
         }
       },
-      "x-go-package": "ESS-microservices/core/http/requests/feedback-form"
+      "x-go-package": "TSS-microservices/core/http/requests/feedback-form"
     },
     "DeletedAt": {
       "$ref": "#/definitions/NullTime"
@@ -342,7 +337,7 @@
           "x-go-name": "Title"
         }
       },
-      "x-go-package": "ESS-microservices/core/models"
+      "x-go-package": "TSS-microservices/core/models"
     },
     "FeedbackModel": {
       "type": "object",
@@ -376,7 +371,7 @@
         }
       },
       "x-go-name": "Feedback",
-      "x-go-package": "ESS-microservices/core/models"
+      "x-go-package": "TSS-microservices/core/models"
     },
     "NullTime": {
       "description": "NullTime implements the [Scanner] interface so\nit can be used as a scan destination, similar to [NullString].",
@@ -392,20 +387,6 @@
         }
       },
       "x-go-package": "database/sql"
-    },
-    "ResponseBody": {
-      "type": "object",
-      "properties": {
-        "data": {
-          "x-go-name": "Data"
-        },
-        "message": {
-          "type": "string",
-          "x-go-name": "Message"
-        }
-      },
-      "x-go-name": "Body",
-      "x-go-package": "ESS-microservices/core/http/responses"
     },
     "TeacherModel": {
       "type": "object",
@@ -457,15 +438,17 @@
         }
       },
       "x-go-name": "Teacher",
-      "x-go-package": "ESS-microservices/core/models"
+      "x-go-package": "TSS-microservices/core/models"
     }
   },
-  "responses": {
-    "validationError": {
-      "description": "A ValidationError is an error that is used when the required input fails validation.",
-      "schema": {
-        "$ref": "#/definitions/ResponseBody"
-      }
+  "tags": [
+    {
+      "description": "Operations related to teacher management",
+      "name": "Teacher"
+    },
+    {
+      "description": "Operations related to feedback management",
+      "name": "Feedback"
     }
-  }
+  ]
 }

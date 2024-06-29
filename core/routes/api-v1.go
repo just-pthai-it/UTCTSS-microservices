@@ -1,10 +1,10 @@
 package routes
 
 import (
-	"ESS-microservices/core/controllers"
-	"ESS-microservices/core/repositories"
-	"ESS-microservices/database"
-	"ESS-microservices/database/drivers"
+	"TSS-microservices/core/controllers"
+	"TSS-microservices/core/repositories"
+	"TSS-microservices/database"
+	"TSS-microservices/database/drivers"
 	"github.com/gin-gonic/gin"
 	"os"
 )

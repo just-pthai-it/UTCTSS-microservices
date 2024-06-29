@@ -1,7 +1,7 @@
 package tool
 
 import (
-	_ "ESS-microservices/database"
+	_ "TSS-microservices/database"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/pressly/goose/v3"
