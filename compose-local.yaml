@@ -1,28 +1,28 @@
 services:
-  app:
-    container_name: $SERVICE_NAME-service
+  feedback-service:
+    container_name: ${APP_NAME}_feedback-service
+    env_file:
+      - .env
     build:
       context: .
       dockerfile: Dockerfile-local
-    #      target: final
-    env_file:
-      - .env.local
     restart: unless-stopped
     depends_on:
-      - postgres
+      - feedback-postgres
+    environment:
+      SERVICE_NAME: feedback
+      DB_HOST: feedback-postgres
     volumes:
       - ./:/app
     ports:
       - 8080:8080
     networks:
-      - $POSTGRES_NETWORK_NAME
+      - feedback-service-network
+      - feedback-postgres-network
 
-  postgres:
-    container_name: ESS-postgres
+  feedback-postgres:
+    container_name: ${APP_NAME}_feedback-postgres
     image: postgres:alpine3.19
-    env_file:
-      - .env.local
-    #      target: final
     restart: unless-stopped
     environment:
       POSTGRES_USER: $DB_USERNAME
@@ -31,23 +31,23 @@ services:
     ports:
       - 5432:5432
     networks:
-      - $POSTGRES_NETWORK_NAME
+      - feedback-postgres-network
 
   adminer:
-    container_name: ESS-adminer-postgres
+    container_name: ${APP_NAME}_adminer-postgres
     image: adminer:4.8.1
-    env_file:
-      - .env.local
     restart: unless-stopped
     ports:
       - 8081:8080
     depends_on:
-      - postgres
+      - feedback-postgres
     networks:
-      - $POSTGRES_NETWORK_NAME
+      - feedback-postgres-network
 
 networks:
-  ESS-postgres-network:
-    name: $POSTGRES_NETWORK_NAME
+  feedback-postgres-network:
+    name: ${APP_NAME}_feedback_postgres-network
     driver: bridge
-
+  feedback-service-network:
+    name: ${APP_NAME}_feedback-service-network
+    driver: bridge
