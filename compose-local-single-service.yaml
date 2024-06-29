@@ -1,0 +1,55 @@
+services:
+  app-service:
+    container_name: ${DOCKER_PREFIX_NAME}-service
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile-local
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    volumes:
+      - ./:/app
+    ports:
+      - 8080:8080
+    networks:
+      - postgres-network
+      - app-network
+
+  postgres:
+    container_name: ${DOCKER_PREFIX_NAME}_postgres
+    env_file:
+      - .env
+    image: postgres:alpine3.19
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: $DB_USERNAME
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_DB: $DB_NAME
+    ports:
+      - 5432:5432
+    networks:
+      - postgres-network
+
+  adminer:
+    container_name: ${DOCKER_PREFIX_NAME}_adminer-postgres
+    env_file:
+      - .env
+    image: adminer:4.8.1
+    restart: unless-stopped
+    ports:
+      - 8081:8080
+    depends_on:
+      - postgres
+    networks:
+      - postgres-network
+
+networks:
+  postgres-network:
+    name: ${DOCKER_PREFIX_NAME}_postgres-network
+    driver: bridge
+  app-network:
+    name: ${DOCKER_PREFIX_NAME}_app-network
+    driver: bridge
+
