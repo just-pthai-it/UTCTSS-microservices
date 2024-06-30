@@ -17,6 +17,7 @@ func main() {
 
 	router.Use(middlewares.ConsoleLoggerMiddleware)
 	router.Use(middlewares.FileLoggerMiddleware)
+	router.Use(middlewares.GinLoggerCustomFormat())
 
 	routes.NewApiRoutes(router)
 
