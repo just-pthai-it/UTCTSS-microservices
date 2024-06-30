@@ -12,10 +12,13 @@ services:
     environment:
       SERVICE_NAME: feedback
       DB_HOST: feedback-postgres
+    security_opt:
+      - seccomp:unconfined
     volumes:
       - ./:/app
     ports:
       - 8080:8080
+      - 40000:40000
     networks:
       - feedback-service-network
       - feedback-postgres-network
