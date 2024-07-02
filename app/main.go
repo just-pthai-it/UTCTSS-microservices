@@ -3,16 +3,12 @@ package main
 import (
 	"TSS-microservices/core/middlewares"
 	"TSS-microservices/core/routes"
-	"TSS-microservices/database/migrations/tool"
 	_ "TSS-microservices/docs"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"os"
 )
 
 func main() {
-	tool.MigrateDatabase("database/migrations/" + os.Getenv("SERVICE_NAME"))
-
 	router := gin.Default()
 
 	router.Use(middlewares.ConsoleLoggerMiddleware)
