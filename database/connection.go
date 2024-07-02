@@ -1,11 +1,11 @@
 package database
 
 import (
+	"TSS-microservices/common"
 	"TSS-microservices/database/drivers"
 	"database/sql"
-	"fmt"
 	"gorm.io/gorm"
-	"time"
+	"log"
 )
 
 type Connection struct {
@@ -15,14 +15,9 @@ type Connection struct {
 }
 
 func (connection *Connection) Connect() {
-	for {
-		var err error
-		connection.GormDb, err = connection.Driver.InitConnection()
-		if err == nil {
-			break
-		}
-
-		fmt.Println(err)
-		time.Sleep(time.Second * 10)
+	var err error
+	connection.GormDb, err = connection.Driver.InitConnection()
+	if err != nil {
+		log.Println(common.Red + err.Error() + common.Reset)
 	}
 }
