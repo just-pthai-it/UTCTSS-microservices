@@ -1,6 +1,7 @@
 package middlewares
 
 import (
+	"TSS-microservices/common"
 	"TSS-microservices/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -13,7 +14,12 @@ func ConsoleLoggerMiddleware(context *gin.Context) {
 	context.Next()
 	end := time.Now()
 	duration := time.Since(end)
-	log.Printf("Request - Method: %s | Status: %d | Duration: %v | Start: %s | End: %s", context.Request.Method, context.Writer.Status(), duration, start, end)
+	color := common.Green
+	if context.Writer.Status() >= 500 {
+		color = common.Red
+	}
+
+	log.Printf(color+"Request - Method: %s | Status: %d | Duration: %v | Start: %s | End: %s"+common.Reset, context.Request.Method, context.Writer.Status(), duration, start, end)
 	log.Println("===========================================================")
 }
 
@@ -28,8 +34,12 @@ func FileLoggerMiddleware(context *gin.Context) {
 
 func GinLoggerCustomFormat() gin.HandlerFunc {
 	return gin.LoggerWithFormatter(func(param gin.LogFormatterParams) string {
-		// your custom format
-		return fmt.Sprintf("%s - [%s] \"%s %s %s %d %s \"%s\" %s\"\n",
+		color := common.Green
+		if param.StatusCode >= 500 {
+			color = common.Red
+		}
+
+		return fmt.Sprintf(color+"%s - [%s] \"%s %s %s %d %s \"%s\" %s\"\n"+common.Reset,
 			param.ClientIP,
 			param.TimeStamp.Format(time.RFC1123),
 			param.Method,
