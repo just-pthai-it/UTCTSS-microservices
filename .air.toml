@@ -3,9 +3,9 @@ tmp_dir = "build"
 
 [build]
   args_bin = []
-#  bin = "./build/main"
-#  cmd = "go build -o ./build/main ./app/."
-  cmd = "go run ./app/."
+  bin = "./build/main"
+  cmd = "go build -o ./build/main ./app/."
+#  cmd = "go run ./app/."
 #  cmd = "go build -o ./build/main ./app/. && dlv exec ./build/main --headless --continue --listen=:40000 --api-version=2 --accept-multiclient"
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata"]
