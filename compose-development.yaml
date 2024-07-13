@@ -1,18 +1,58 @@
 services:
-  server:
+  feedback-service:
+    container_name: ${APP_NAME}_feedback-service
     env_file:
       - .env
     build:
       context: .
       dockerfile: Dockerfile-local
-    #      target: final
     restart: unless-stopped
+    depends_on:
+      - feedback-postgres
+    environment:
+      SERVICE_NAME: feedback
+      DB_HOST: feedback-postgres
     ports:
       - 8080:8080
+      - 40000:40000
     networks:
-      - education-supporting-system_mariadb-network
+      - feedback-service-network
+      - feedback-postgres-network
+
+  feedback-postgres:
+    container_name: ${APP_NAME}_feedback-postgres
+    image: postgres:alpine3.19
+    restart: unless-stopped
+    volumes:
+      - ${APP_NAME}_feedback_postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: $DB_USERNAME
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_DB: $DB_NAME
+    ports:
+      - 5432:5432
+    networks:
+      - feedback-postgres-network
+
+  adminer:
+    container_name: ${APP_NAME}_adminer-postgres
+    image: adminer:4.8.1
+    restart: unless-stopped
+    ports:
+      - 8081:8080
+    depends_on:
+      - feedback-postgres
+    networks:
+      - feedback-postgres-network
 
 networks:
-  education-supporting-system_mariadb-network:
-    external: true
+  feedback-postgres-network:
+    name: ${APP_NAME}_feedback_postgres-network
+    driver: bridge
+  feedback-service-network:
+    name: ${APP_NAME}_feedback-service-network
+    driver: bridge
 
+volumes:
+  feedback-postgres-data:
+    name: ${APP_NAME}_feedback_postgres-data
