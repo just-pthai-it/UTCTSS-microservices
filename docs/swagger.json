@@ -12,7 +12,7 @@
   "swagger": "2.0",
   "info": {
     "description": "# Document of TSS-microservices APIs\n\nthere are no TOS at this moment, use at your own risk we take no responsibility",
-    "title": "TSS-microservices APIs temp",
+    "title": "TSS-microservices APIs",
     "contact": {
       "name": "Pham Hai",
       "email": "pthai.it.210501@gmail.com"
@@ -118,6 +118,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "$ref": "#/responses/ValidationError"
           }
         }
       }
@@ -155,6 +158,47 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/hermes/send-mail": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "Hermes"
+        ],
+        "summary": "Send mail",
+        "operationId": "SendMail",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/SendMailFormRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "send email",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/responses/ValidationError"
           }
         }
       }
@@ -388,6 +432,52 @@
       },
       "x-go-package": "database/sql"
     },
+    "ResponseBody": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "x-go-name": "Data"
+        },
+        "message": {
+          "type": "string",
+          "x-go-name": "Message"
+        }
+      },
+      "x-go-name": "Body",
+      "x-go-package": "TSS-microservices/core/http/responses"
+    },
+    "SendMailFormRequest": {
+      "type": "object",
+      "required": [
+        "code",
+        "recipients"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "x-go-name": "Code"
+        },
+        "placeholder": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-go-name": "PlaceHolder"
+        },
+        "recipients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-go-name": "Recipients"
+        },
+        "subject": {
+          "type": "string",
+          "x-go-name": "Subject"
+        }
+      },
+      "x-go-package": "TSS-microservices/core/http/requests/hermes-forms"
+    },
     "TeacherModel": {
       "type": "object",
       "properties": {
@@ -439,6 +529,14 @@
       },
       "x-go-name": "Teacher",
       "x-go-package": "TSS-microservices/core/models"
+    }
+  },
+  "responses": {
+    "ValidationError": {
+      "description": "A ValidationError is an error that is used when the required input fails validation.",
+      "schema": {
+        "$ref": "#/definitions/ResponseBody"
+      }
     }
   },
   "tags": [

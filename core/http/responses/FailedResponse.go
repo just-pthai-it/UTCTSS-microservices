@@ -5,7 +5,7 @@ type FailedResponseBody struct {
 }
 
 // A ValidationError is an error that is used when the required input fails validation.
-// swagger:response validationError
+// swagger:response ValidationError
 type ValidationError struct {
 	// The error message
 	// in: body

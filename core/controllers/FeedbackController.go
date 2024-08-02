@@ -31,7 +31,7 @@ type FeedbackController struct {
 //	    properties:
 //	      data:
 //	        "$ref": "#/definitions/FeedbackModel"
-//	400:
+//	 400:
 //	  "$ref": "#/responses/ValidationError"
 
 func (controller *FeedbackController) Create(context *gin.Context) {

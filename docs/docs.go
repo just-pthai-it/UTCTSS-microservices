@@ -18,3 +18,5 @@
 //
 // swagger:meta
 package docs
+
+import _ "TSS-microservices/core/http/responses"
