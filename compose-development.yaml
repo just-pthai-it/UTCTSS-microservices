@@ -5,7 +5,7 @@ services:
       - .env
     build:
       context: .
-      dockerfile: Dockerfile-local
+      dockerfile: Dockerfile-development
     restart: unless-stopped
     depends_on:
       - feedback-postgres
@@ -34,6 +34,42 @@ services:
     networks:
       - feedback-postgres-network
 
+
+  hermes-service:
+    container_name: ${APP_NAME}_hermes-service
+    env_file:
+      - .env
+    build:
+      context: .
+      dockerfile: Dockerfile-development
+    restart: unless-stopped
+    depends_on:
+      - hermes-postgres
+    environment:
+      SERVICE_NAME: hermes
+      DB_HOST: hermes-postgres
+    ports:
+      - 8080:8080
+      - 40000:40000
+    networks:
+      - hermes-service-network
+      - hermes-postgres-network
+
+  hermes-postgres:
+    container_name: ${APP_NAME}_hermes-postgres
+    image: postgres:alpine3.19
+    restart: unless-stopped
+    volumes:
+      - ${APP_NAME}_hermes_postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: $DB_USERNAME
+      POSTGRES_PASSWORD: $DB_PASSWORD
+      POSTGRES_DB: $DB_NAME
+    ports:
+      - 5432:5432
+    networks:
+      - hermes-postgres-network
+
   adminer:
     container_name: ${APP_NAME}_adminer-postgres
     image: adminer:4.8.1
@@ -42,8 +78,10 @@ services:
       - 8081:8080
     depends_on:
       - feedback-postgres
+      - hermes-postgres
     networks:
       - feedback-postgres-network
+      - hermes-postgres-network
 
 networks:
   feedback-postgres-network:
@@ -53,6 +91,16 @@ networks:
     name: ${APP_NAME}_feedback-service-network
     driver: bridge
 
+  hermes-postgres-network:
+    name: ${APP_NAME}_hermes_postgres-network
+    driver: bridge
+  hermes-service-network:
+    name: ${APP_NAME}_hermes-service-network
+    driver: bridge
+
 volumes:
   feedback-postgres-data:
     name: ${APP_NAME}_feedback_postgres-data
+
+  hermes-postgres-data:
+    name: ${APP_NAME}_hermes_postgres-data

@@ -9,13 +9,16 @@ services:
     restart: unless-stopped
     depends_on:
       - postgres
+    security_opt:
+      - seccomp:unconfined
     volumes:
       - ./:/app
     ports:
       - 8080:8080
+      - 40000:40000
     networks:
-      - postgres-network
       - app-network
+      - postgres-network
 
   postgres:
     container_name: ${DOCKER_PREFIX_NAME}_postgres

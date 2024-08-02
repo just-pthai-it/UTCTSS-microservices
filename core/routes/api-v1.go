@@ -43,5 +43,14 @@ func NewApiRoutes(router *gin.Engine) {
 			apiV1RouterGroup.GET("/feedback", feedbackController.GetMany)
 		}
 
+		if serviceName == "hermes" {
+			hermesController := controllers.HermesController{
+				Repository: repositories.MailTemplateRepository{
+					Connection: databaseConnection,
+				},
+			}
+
+			apiV1RouterGroup.POST("/hermes/send-mail", hermesController.SendMail)
+		}
 	}
 }
