@@ -64,7 +64,7 @@ func (controller *HermesController) SendMail(context *gin.Context) {
 		return
 	}
 
-	sendMail(message, input.Recipients)
+	go sendMail(message, input.Recipients)
 
 	context.JSON(http.StatusCreated, gin.H{"message": "Email sent successfully!"})
 }
