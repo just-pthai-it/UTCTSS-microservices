@@ -3,6 +3,7 @@ package controllers
 import (
 	"TSS-microservices/common"
 	feedback_form "TSS-microservices/core/http/requests/feedback-form"
+	feedback_response "TSS-microservices/core/http/responses/feedback"
 	"TSS-microservices/core/models"
 	"TSS-microservices/core/repositories"
 	"github.com/gin-gonic/gin"
@@ -122,18 +123,7 @@ func (controller *FeedbackController) GetById(context *gin.Context) {
 //     type: string
 // responses:
 //	 200:
-//	  description: list of feedback
-//	  schema:
-//	    type: object
-//	    properties:
-//	      data:
-//	        type: array
-//	        items:
-//	          "$ref": "#/definitions/FeedbackModel"
-//		  limit:
-//		    type: integer
-//		  offset:
-//		    type: integer
+//     "$ref": "#/responses/GetManyResponse"
 
 func (controller *FeedbackController) GetMany(context *gin.Context) {
 	limit, _ := strconv.Atoi(context.DefaultQuery("limit", "10"))
@@ -159,5 +149,5 @@ func (controller *FeedbackController) GetMany(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{"data": feedback, "limit": limit, "offset": offset})
+	context.JSON(http.StatusOK, feedback_response.GetManyResponse{Body: feedback_response.GetManyResponseBody{Limit: limit, Offset: offset, Data: feedback}}.Body)
 }

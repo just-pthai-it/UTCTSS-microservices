@@ -57,7 +57,7 @@ func (controller *HermesController) SendMail(context *gin.Context) {
 		mailTemplate.Subject = input.Subject
 	}
 
-	message, err := controller.handleMailMessage(mailTemplate, input.PlaceHolder)
+	message, err := controller.handleMailMessage(mailTemplate, input.Placeholder)
 
 	if err != nil {
 		context.JSON(common.ErrorHandlerHttpResponse(err))

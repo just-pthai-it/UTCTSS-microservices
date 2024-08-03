@@ -64,24 +64,7 @@
         ],
         "responses": {
           "200": {
-            "description": "list of feedback",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "data": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/definitions/FeedbackModel"
-                  }
-                },
-                "limit": {
-                  "type": "integer"
-                },
-                "offset": {
-                  "type": "integer"
-                }
-              }
-            }
+            "$ref": "#/responses/GetManyResponse"
           }
         }
       },
@@ -417,6 +400,29 @@
       "x-go-name": "Feedback",
       "x-go-package": "TSS-microservices/core/models"
     },
+    "GetManyResponseBody": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FeedbackModel"
+          },
+          "x-go-name": "Data"
+        },
+        "limit": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Limit"
+        },
+        "offset": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Offset"
+        }
+      },
+      "x-go-package": "TSS-microservices/core/http/responses/feedback"
+    },
     "NullTime": {
       "description": "NullTime implements the [Scanner] interface so\nit can be used as a scan destination, similar to [NullString].",
       "type": "object",
@@ -462,18 +468,23 @@
           "additionalProperties": {
             "type": "string"
           },
-          "x-go-name": "PlaceHolder"
+          "x-go-name": "Placeholder"
         },
         "recipients": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "x-go-name": "Recipients"
+          "x-go-name": "Recipients",
+          "example": [
+            "email1@gmal.com",
+            "email2@gmail.com"
+          ]
         },
         "subject": {
           "type": "string",
-          "x-go-name": "Subject"
+          "x-go-name": "Subject",
+          "x-note": "All key must be capital the first character"
         }
       },
       "x-go-package": "TSS-microservices/core/http/requests/hermes-forms"
@@ -532,6 +543,12 @@
     }
   },
   "responses": {
+    "GetManyResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/GetManyResponseBody"
+      }
+    },
     "ValidationError": {
       "description": "A ValidationError is an error that is used when the required input fails validation.",
       "schema": {
