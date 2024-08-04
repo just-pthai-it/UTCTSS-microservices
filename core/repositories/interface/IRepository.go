@@ -1,6 +1,6 @@
 package _interface
 
-import _interface "TSS-microservices/core/models/interface"
+import _interface "UTCTSS-microservices/core/models/interface"
 
 type IRepository interface {
 	Create(model *_interface.IModel) error

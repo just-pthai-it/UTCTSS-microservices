@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "TSS-microservices/database"
+	_ "UTCTSS-microservices/database"
 	"context"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/pressly/goose/v3"

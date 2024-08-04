@@ -1,6 +1,6 @@
 package feedback_form
 
-import "TSS-microservices/core/models"
+import "UTCTSS-microservices/core/models"
 
 type CreateFeedbackFormRequest struct {
 	// required: true

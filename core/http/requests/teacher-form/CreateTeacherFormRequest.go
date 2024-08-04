@@ -1,6 +1,6 @@
 package teacher_form
 
-import customTypes "TSS-microservices/custom-types"
+import customTypes "UTCTSS-microservices/custom-types"
 
 // swagger:parameters CreateTeacher
 type CreateTeacherFormRequest struct {

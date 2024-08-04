@@ -1,11 +1,11 @@
 package controllers
 
 import (
-	"TSS-microservices/common"
-	feedback_form "TSS-microservices/core/http/requests/feedback-form"
-	feedback_response "TSS-microservices/core/http/responses/feedback"
-	"TSS-microservices/core/models"
-	"TSS-microservices/core/repositories"
+	"UTCTSS-microservices/common"
+	feedback_form "UTCTSS-microservices/core/http/requests/feedback-form"
+	feedback_response "UTCTSS-microservices/core/http/responses/feedback"
+	"UTCTSS-microservices/core/models"
+	"UTCTSS-microservices/core/repositories"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"

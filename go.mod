@@ -1,4 +1,4 @@
-module TSS-microservices
+module UTCTSS-microservices
 
 go 1.22
 

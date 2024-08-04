@@ -1,6 +1,6 @@
 package feedback
 
-import "TSS-microservices/core/models"
+import "UTCTSS-microservices/core/models"
 
 // swagger:response GetManyResponse
 type GetManyResponse struct {

@@ -1,4 +1,4 @@
-# Teaching-supporting-system microservices (TSS-MSs)
+# UTC Teaching-supporting-system microservices (UTCTSS-MSs)
 
 ## Installation
 **Requirements:**

@@ -1,8 +1,8 @@
 package middlewares
 
 import (
-	"TSS-microservices/common"
-	"TSS-microservices/utils"
+	"UTCTSS-microservices/common"
+	"UTCTSS-microservices/utils"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"

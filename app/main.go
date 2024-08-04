@@ -1,9 +1,9 @@
 package main
 
 import (
-	"TSS-microservices/core/middlewares"
-	"TSS-microservices/core/routes"
-	_ "TSS-microservices/docs"
+	"UTCTSS-microservices/core/middlewares"
+	"UTCTSS-microservices/core/routes"
+	_ "UTCTSS-microservices/docs"
 	"fmt"
 	"github.com/gin-gonic/gin"
 )

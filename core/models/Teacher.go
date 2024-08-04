@@ -1,7 +1,7 @@
 package models
 
 import (
-	customTypes "TSS-microservices/custom-types"
+	customTypes "UTCTSS-microservices/custom-types"
 	"gorm.io/gorm"
 	"time"
 )

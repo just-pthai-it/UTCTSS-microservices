@@ -1,8 +1,8 @@
 package repositories
 
 import (
-	"TSS-microservices/core/models"
-	"TSS-microservices/database"
+	"UTCTSS-microservices/core/models"
+	"UTCTSS-microservices/database"
 )
 
 type FeedbackRepository struct {

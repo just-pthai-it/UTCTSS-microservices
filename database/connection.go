@@ -1,8 +1,8 @@
 package database
 
 import (
-	"TSS-microservices/common"
-	"TSS-microservices/database/drivers"
+	"UTCTSS-microservices/common"
+	"UTCTSS-microservices/database/drivers"
 	"database/sql"
 	"gorm.io/gorm"
 	"log"

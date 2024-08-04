@@ -1,6 +1,6 @@
-// Package docs TSS-microservices APIs
+// Package docs UTCTSS-microservices APIs
 //
-// # Document of TSS-microservices APIs
+// # Document of UTCTSS-microservices APIs
 //
 // there are no TOS at this moment, use at your own risk we take no responsibility
 //
@@ -19,4 +19,4 @@
 // swagger:meta
 package docs
 
-import _ "TSS-microservices/core/http/responses"
+import _ "UTCTSS-microservices/core/http/responses"

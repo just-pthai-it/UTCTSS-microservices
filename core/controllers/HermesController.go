@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"TSS-microservices/common"
-	hermes_forms "TSS-microservices/core/http/requests/hermes-forms"
-	"TSS-microservices/core/models"
-	"TSS-microservices/core/repositories"
+	"UTCTSS-microservices/common"
+	hermes_forms "UTCTSS-microservices/core/http/requests/hermes-forms"
+	"UTCTSS-microservices/core/models"
+	"UTCTSS-microservices/core/repositories"
 	"bytes"
 	"fmt"
 	"github.com/gin-gonic/gin"
