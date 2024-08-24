@@ -1,56 +1,110 @@
 services:
-  feedback-service:
-    container_name: ${APP_NAME}_feedback-service
+  feedback:
+    container_name: feedback
     env_file:
       - .env
-    build:
-      context: .
-      dockerfile: Dockerfile-local
+#    build:
+#      context: .
+#      dockerfile: Dockerfile-local
+    image: utctss-mss:v1
     restart: unless-stopped
     depends_on:
       - feedback-postgres
     environment:
       SERVICE_NAME: feedback
       DB_HOST: feedback-postgres
+      DB_NAME: feedback
+      DB_USERNAME: ${DB_USERNAME:-user}
+      DB_PASSWORD: ${DB_PASSWORD:-password}
     security_opt:
       - seccomp:unconfined
+    ports:
+      - 5006:8080
+      - 45006:40000
+    networks:
+      - feedback-network
+      - feedback-postgres-network
     volumes:
       - ./:/app
-    ports:
-      - 8080:8080
-      - 40000:40000
-    networks:
-      - feedback-service-network
-      - feedback-postgres-network
 
   feedback-postgres:
-    container_name: ${APP_NAME}_feedback-postgres
+    container_name: feedback-postgres
     image: postgres:alpine3.19
     restart: unless-stopped
     environment:
-      POSTGRES_USER: $DB_USERNAME
-      POSTGRES_PASSWORD: $DB_PASSWORD
-      POSTGRES_DB: $DB_NAME
+      POSTGRES_USER: ${DB_USERNAME:-user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+      POSTGRES_DB: feedback
     ports:
-      - 5432:5432
+      - 54326:5432
     networks:
       - feedback-postgres-network
 
+
+  hermes:
+    container_name: hermes
+    env_file:
+      - .env
+    #    build:
+    #      context: .
+    #      dockerfile: Dockerfile-local
+    image: utctss-mss:v1
+    restart: unless-stopped
+    depends_on:
+      - hermes-postgres
+    environment:
+      SERVICE_NAME: hermes
+      DB_HOST: hermes-postgres
+      DB_NAME: hermes
+      DB_USERNAME: ${DB_USERNAME:-user}
+      DB_PASSWORD: ${DB_PASSWORD:-password}
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - 5003:8080
+      - 45003:40000
+    networks:
+      - hermes-network
+      - hermes-postgres-network
+    volumes:
+      - ./:/app
+
+  hermes-postgres:
+    container_name: hermes-postgres
+    image: postgres:alpine3.19
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+      POSTGRES_DB: hermes
+    ports:
+      - 54324:5432
+    networks:
+      - hermes-postgres-network
+
   adminer:
-    container_name: ${APP_NAME}_adminer-postgres
+    container_name: adminer-postgres
     image: adminer:4.8.1
     restart: unless-stopped
     ports:
       - 8081:8080
     depends_on:
       - feedback-postgres
+      - hermes-postgres
     networks:
       - feedback-postgres-network
+      - hermes-postgres-network
 
 networks:
-  feedback-postgres-network:
-    name: ${APP_NAME}_feedback_postgres-network
+  feedback-network:
+    name: feedback-network
     driver: bridge
-  feedback-service-network:
-    name: ${APP_NAME}_feedback-service-network
+  feedback-postgres-network:
+    name: feedback-postgres-network
+    driver: bridge
+  hermes-network:
+    name: hermes-network
+    driver: bridge
+  hermes-postgres-network:
+    name: hermes-postgres-network
     driver: bridge
