@@ -1,4 +1,21 @@
 services:
+  docs:
+    container_name: docs
+    env_file:
+      - .env
+#    build:
+#      context: .
+#      dockerfile: Dockerfile-local
+    image: utctss-mss:v1
+    restart: unless-stopped
+    environment:
+      SERVICE_NAME: docs
+    ports:
+      - 8000:2000
+    volumes:
+      - ./:/app
+
+
   feedback:
     container_name: feedback
     env_file:

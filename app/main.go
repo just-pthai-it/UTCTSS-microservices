@@ -8,11 +8,13 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"log"
+	"os"
 	"os/exec"
 	"time"
 )
 
 func main() {
+	serveOpenAPIsDocs()
 	migrateDatabase()
 
 	router := gin.Default()
@@ -52,5 +54,18 @@ func migrateDatabase() {
 			break
 		}
 		time.Sleep(time.Second)
+	}
+}
+
+func serveOpenAPIsDocs() {
+	if os.Getenv("ENV") != "local" || os.Getenv("SERVICE_NAME") != "docs" {
+		return
+	}
+
+	cmd := exec.Command("swagger", "serve", "--port=2000", "--no-open", "./docs/swagger.json")
+	fmt.Println(common.Purple + "Serve OpenAPIs docs!" + common.Reset)
+	_, err := cmd.CombinedOutput()
+	if err != nil {
+		fmt.Println(common.Red + "Serve OpenAPIs docs failed: " + err.Error() + common.Reset)
 	}
 }
