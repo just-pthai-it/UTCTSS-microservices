@@ -1,0 +1,21 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="compose-local-single-service.yaml[adminer, app-service, postgres]: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
+    <deployment type="docker-compose.yml">
+      <settings>
+        <option name="composeProjectName" value="tss-microservices-local" />
+        <option name="envFilePath" value="" />
+        <option name="commandLineOptions" value="--build" />
+        <option name="services">
+          <list>
+            <option value="adminer" />
+            <option value="app-service" />
+            <option value="postgres" />
+          </list>
+        </option>
+        <option name="sourceFilePath" value="../UTCTSS-microservices/compose-local-single-service.yaml" />
+        <option name="upDetach" value="false" />
+      </settings>
+    </deployment>
+    <method v="2" />
+  </configuration>
+</component>

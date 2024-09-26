@@ -23,7 +23,8 @@ go.work.sum
 
 #ide/editor
 #ide
-.idea
+.idea/*
+!.idea/runConfigurations
 .vscode
 
 .env*
