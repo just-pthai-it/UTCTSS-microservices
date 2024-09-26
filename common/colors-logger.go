@@ -1,5 +1,7 @@
 package common
 
+import "fmt"
+
 const (
 	Reset  = "\033[0m"
 	Red    = "\033[31m"
@@ -10,3 +12,7 @@ const (
 	Cyan   = "\033[36m"
 	White  = "\033[37m"
 )
+
+func ConsoleLogBlue(value any) {
+	fmt.Printf(Blue+"%+v"+Reset+"\n", value)
+}

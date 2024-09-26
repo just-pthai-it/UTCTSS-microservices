@@ -18,6 +18,7 @@
         </option>
         <option name="sourceFilePath" value="compose-local.yaml" />
         <option name="upDetach" value="false" />
+        <option name="upForceRecreate" value="true" />
         <option name="upRemoveOrphans" value="true" />
         <option name="upRenewAnonVolumes" value="true" />
       </settings>
