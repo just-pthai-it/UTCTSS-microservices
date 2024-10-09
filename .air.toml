@@ -4,9 +4,9 @@ tmp_dir = "bin"
 [build]
   args_bin = []
   bin = "./bin/${SERVICE_NAME}"
-#  cmd = "go build -o ./bin/${SERVICE_NAME} ./services/${SERVICE_NAME}/app/."
+  cmd = "go build -o ./bin/${SERVICE_NAME} ./services/${SERVICE_NAME}/app/."
 #  cmd = "go run ./app/."
-  cmd = "go build -o ./bin/${SERVICE_NAME} ./services/${SERVICE_NAME}/app/. && dlv exec ./bin/${SERVICE_NAME} --headless --continue --listen=:40000 --api-version=2 --accept-multiclient"
+#  cmd = "go build -o ./bin/${SERVICE_NAME} ./services/${SERVICE_NAME}/app/. && dlv exec ./bin/${SERVICE_NAME} --headless --continue --listen=:40000 --api-version=2 --accept-multiclient"
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata"]
   exclude_file = []
