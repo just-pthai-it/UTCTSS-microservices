@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="script build local docker image" type="ShConfigurationType">
-    <option name="SCRIPT_TEXT" value="docker build -f Dockerfile-local -t utctss-mss:v1 ." />
+    <option name="SCRIPT_TEXT" value="docker build -f Dockerfile-local -t utconnect-go:v1 ." />
     <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
     <option name="SCRIPT_PATH" value="" />
     <option name="SCRIPT_OPTIONS" value="" />

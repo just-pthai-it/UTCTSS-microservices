@@ -14,8 +14,8 @@ services:
     volumes:
       - ./:/app
     ports:
-      - 8080:8080
-      - 40000:40000
+      - "8080:8080"
+      - "40000:40000"
     networks:
       - app-network
       - postgres-network
@@ -31,7 +31,7 @@ services:
       POSTGRES_PASSWORD: $DB_PASSWORD
       POSTGRES_DB: $DB_NAME
     ports:
-      - 5432:5432
+      - "5432:5432"
     networks:
       - postgres-network
 
@@ -42,7 +42,7 @@ services:
     image: adminer:4.8.1
     restart: unless-stopped
     ports:
-      - 8081:8080
+      - "8081:8080"
     depends_on:
       - postgres
     networks:

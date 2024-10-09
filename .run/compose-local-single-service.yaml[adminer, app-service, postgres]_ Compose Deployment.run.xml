@@ -2,7 +2,7 @@
   <configuration default="false" name="compose-local-single-service.yaml[adminer, app-service, postgres]: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
     <deployment type="docker-compose.yml">
       <settings>
-        <option name="composeProjectName" value="tss-microservices-local" />
+        <option name="composeProjectName" value="utconnect-go_single-local" />
         <option name="envFilePath" value="" />
         <option name="commandLineOptions" value="--build" />
         <option name="services">
@@ -14,8 +14,12 @@
         </option>
         <option name="sourceFilePath" value="../UTCTSS-microservices/compose-local-single-service.yaml" />
         <option name="upDetach" value="false" />
+        <option name="upRemoveOrphans" value="true" />
+        <option name="upRenewAnonVolumes" value="true" />
       </settings>
     </deployment>
-    <method v="2" />
+    <method v="2">
+      <option name="RunConfigurationTask" enabled="true" run_configuration_name="utconnect common setup" run_configuration_type="ShConfigurationType" />
+    </method>
   </configuration>
 </component>

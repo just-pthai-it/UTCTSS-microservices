@@ -3,15 +3,14 @@ services:
     container_name: docs
     env_file:
       - .env
-#    build:
-#      context: .
-#      dockerfile: Dockerfile-local
-    image: utctss-mss:v1
+    build:
+      context: .
+      dockerfile: Dockerfile-local
     restart: unless-stopped
     environment:
       SERVICE_NAME: docs
     ports:
-      - 8000:2000
+      - "8000:2000"
     volumes:
       - ./:/app
 
@@ -20,10 +19,9 @@ services:
     container_name: feedback
     env_file:
       - .env
-#    build:
-#      context: .
-#      dockerfile: Dockerfile-local
-    image: utctss-mss:v1
+    build:
+      context: .
+      dockerfile: Dockerfile-local
     restart: unless-stopped
     depends_on:
       - feedback-postgres
@@ -36,8 +34,8 @@ services:
     security_opt:
       - seccomp:unconfined
     ports:
-      - 5006:8080
-      - 45006:40000
+      - "5006:8080"
+      - "45006:40000"
     networks:
       - feedback-network
       - feedback-postgres-network
@@ -53,7 +51,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
       POSTGRES_DB: feedback
     ports:
-      - 54326:5432
+      - "54326:5432"
     networks:
       - feedback-postgres-network
 
@@ -62,10 +60,9 @@ services:
     container_name: hermes
     env_file:
       - .env
-    #    build:
-    #      context: .
-    #      dockerfile: Dockerfile-local
-    image: utctss-mss:v1
+    build:
+      context: .
+      dockerfile: Dockerfile-local
     restart: unless-stopped
     depends_on:
       - hermes-postgres
@@ -78,8 +75,8 @@ services:
     security_opt:
       - seccomp:unconfined
     ports:
-      - 5003:8080
-      - 45003:40000
+      - "5003:8080"
+      - "45003:40000"
     networks:
       - hermes-network
       - hermes-postgres-network
@@ -95,7 +92,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
       POSTGRES_DB: hermes
     ports:
-      - 54324:5432
+      - "54324:5432"
     networks:
       - hermes-postgres-network
 
@@ -104,7 +101,7 @@ services:
     image: adminer:4.8.1
     restart: unless-stopped
     ports:
-      - 8081:8080
+      - "8081:8080"
     depends_on:
       - feedback-postgres
       - hermes-postgres

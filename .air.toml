@@ -1,12 +1,12 @@
 root = "."
-tmp_dir = "build"
+tmp_dir = "bin"
 
 [build]
   args_bin = []
-  bin = "./build/main"
-  cmd = "go build -o ./build/main ./app/."
+  bin = "./bin/${SERVICE_NAME}"
+#  cmd = "go build -o ./bin/${SERVICE_NAME} ./services/${SERVICE_NAME}/app/."
 #  cmd = "go run ./app/."
-#  cmd = "go build -o ./build/main ./app/. && dlv exec ./build/main --headless --continue --listen=:40000 --api-version=2 --accept-multiclient"
+  cmd = "go build -o ./bin/${SERVICE_NAME} ./services/${SERVICE_NAME}/app/. && dlv exec ./bin/${SERVICE_NAME} --headless --continue --listen=:40000 --api-version=2 --accept-multiclient"
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata"]
   exclude_file = []
@@ -19,8 +19,8 @@ tmp_dir = "build"
   include_file = []
   kill_delay = "0s"
   log = "build-errors.log"
-  poll = false
-  poll_interval = 0
+  poll = true
+  poll_interval = 2000
   post_cmd = []
   pre_cmd = []
   rerun = false

@@ -2,7 +2,7 @@
   <configuration default="false" name="docker compose local" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
     <deployment type="docker-compose.yml">
       <settings>
-        <option name="composeProjectName" value="utctss-mss-local" />
+        <option name="composeProjectName" value="utconnect-go_local" />
         <option name="envFilePath" value="" />
         <option name="envVars">
           <list>
@@ -24,7 +24,6 @@
       </settings>
     </deployment>
     <method v="2">
-      <option name="RunConfigurationTask" enabled="true" run_configuration_name="script build local docker image" run_configuration_type="ShConfigurationType" />
       <option name="RunConfigurationTask" enabled="true" run_configuration_name="utconnect common setup" run_configuration_type="ShConfigurationType" />
     </method>
   </configuration>
