@@ -7,9 +7,32 @@ on:
       - development
 
 jobs:
-  Build-image:
+  Define-services-matrix:
     runs-on: ubuntu-latest
     environment: development
+    outputs:
+      services-matrix: ${{ steps.generate-matrix.outputs.matrix }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Generate matrix data
+        id: generate-matrix
+        run: |
+          ./.github/workflows/scripts/generate-services-matrix.sh
+        shell: bash
+
+      - name: Output matrix data
+        run: |
+          echo "Matrix: ${{ steps.generate-matrix.outputs.matrix }}"
+
+  Build-image:
+    needs: Define-services-matrix
+    runs-on: ubuntu-latest
+    environment: development
+    strategy:
+      matrix:
+        service: ${{ fromJSON(needs.Define-services-matrix.outputs.services-matrix) }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -31,7 +54,9 @@ jobs:
         with:
           file: Dockerfile-development
           push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/utctss-mss:dev-v1
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/utconnect-${{ matrix.service.service-name }}:dev-v1
+          build-args: |
+            service_name=${{ matrix.service.service-name }}
 
 #  Deploy-app:
 #    needs:
