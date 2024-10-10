@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0](https://github.com/just-pthai-it/UTCTSS-microservices/compare/v1.0.2...v2.0.0) (2024-10-10)
+
+
+### ⚠ BREAKING CHANGES
+
+* reconstruct project's structure to be more "microservices"
+
+* reconstruct project's structure to be more "microservices" ([13c72e7](https://github.com/just-pthai-it/UTCTSS-microservices/commit/13c72e7972c3d871c6a6a0c8ecea940f39831869))
+
+
+### CI/CD
+
+* **docker:** update Dockerfile-development. ([567844c](https://github.com/just-pthai-it/UTCTSS-microservices/commit/567844c27593329341a1f061aa6df5ecfbe48edd))
+* update dockerize workflow. ([26ecde8](https://github.com/just-pthai-it/UTCTSS-microservices/commit/26ecde8ae045c4b6c872b33f6c82213cd2206949))
+
 ## [1.0.2](https://github.com/just-pthai-it/UTCTSS-microservices/compare/v1.0.1...v1.0.2) (2024-08-26)
 
 
