@@ -1,5 +1,7 @@
 FROM golang:1.22-alpine3.20
 
+ARG service_name
+
 WORKDIR /app
 
 COPY go.mod go.sum ./
@@ -9,11 +11,13 @@ RUN go install github.com/go-swagger/go-swagger/cmd/swagger@v0.31.0
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o ./bin/migration-tool ./core/database/migrations/tool/main/.
-RUN CGO_ENABLED=0 GOOS=linux go build -o ./bin/main ./app/.
+RUN CGO_ENABLED=0 GOOS=linux go build -o ./core/database/migrations/tool/bin/migration-tool ./core/database/migrations/tool/main/.
+RUN CGO_ENABLED=0 GOOS=linux go build -o ./bin/$service_name ./services/$service_name/app/.
 
 #RUN addgroup -g 1000 appgroup
 #RUN adduser -D -u 1000 appuser -G appgroup
 #USER appuser
 
-ENTRYPOINT ["./build/main"]
+ENV SERVICE_NAME=$service_name
+
+ENTRYPOINT ["sh", "-c", "./bin/$SERVICE_NAME"]
