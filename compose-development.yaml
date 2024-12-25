@@ -1,19 +1,40 @@
+x-base-service-env-vars: &base-service-env-vars
+  DB_USERNAME: ${DB_USERNAME:-user}
+  DB_PASSWORD: ${DB_PASSWORD:-password}
+
+x-base-service-db-env-vars: &base-service-db-env-vars
+  POSTGRES_USER: ${DB_USERNAME:-user}
+  POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+
+x-base-service: &base-service
+#  pull_policy: always
+  restart: unless-stopped
+
 services:
-  feedback-service:
-    container_name: feedback-service
+  my-swagger:
+    container_name: my-swagger
     env_file:
       - .env
-    image: ${DOCKERHUB_USERNAME:-pthaiit210501}/utctss-mss:v1
-    pull_policy: always
-    restart: unless-stopped
+    image: ${DOCKERHUB_USERNAME:-pthaiit210501}/utconnect-go-my-swagger:dev-v1
+    environment:
+      SERVICE_NAME: my-swagger
+    ports:
+      - "4000:2000"
+    <<: *base-service
+
+
+  feedback:
+    container_name: feedback
+    env_file:
+      - .env
+    image: ${DOCKERHUB_USERNAME:-pthaiit210501}/utconnect-go-feedback:dev-v1
     depends_on:
       - feedback-postgres
     environment:
+      <<: *base-service-env-vars
       SERVICE_NAME: feedback
       DB_HOST: feedback-postgres
       DB_NAME: feedback
-      DB_USERNAME: ${DB_USERNAME:-user}
-      DB_PASSWORD: ${DB_PASSWORD:-password}
     ports:
       - "5006:8080"
     networks:
@@ -21,6 +42,7 @@ services:
       - feedback-postgres-network
     volumes:
       - feedback-data:/app/storage
+    <<: *base-service
 
   feedback-postgres:
     container_name: feedback-postgres
@@ -29,8 +51,7 @@ services:
     volumes:
       - feedback-postgres-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: ${DB_USERNAME:-user}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+      <<: *base-service-db-env-vars
       POSTGRES_DB: feedback
     ports:
       - "54326:5432"
@@ -38,21 +59,18 @@ services:
       - feedback-postgres-network
 
 
-  hermes-service:
-    container_name: hermes-service
+  hermes:
+    container_name: hermes
     env_file:
       - .env
-    image: ${DOCKERHUB_USERNAME:-pthaiit210501}/utctss-mss:v1
-    pull_policy: always
-    restart: unless-stopped
+    image: ${DOCKERHUB_USERNAME:-pthaiit210501}/utconnect-go-hermes:dev-v1
     depends_on:
       - hermes-postgres
     environment:
+      <<: *base-service-env-vars
       SERVICE_NAME: hermes
       DB_HOST: hermes-postgres
       DB_NAME: hermes
-      DB_USERNAME: ${DB_USERNAME:-user}
-      DB_PASSWORD: ${DB_PASSWORD:-password}
     ports:
       - "5003:8080"
     networks:
@@ -60,6 +78,7 @@ services:
       - hermes-postgres-network
     volumes:
       - hermes-data:/app/storage
+    <<: *base-service
 
   hermes-postgres:
     container_name: hermes-postgres
@@ -68,11 +87,10 @@ services:
     volumes:
       - hermes-postgres-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: ${DB_USERNAME:-user}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+      <<: *base-service-db-env-vars
       POSTGRES_DB: hermes
     ports:
-      - "54324:5432"
+      - "54323:5432"
     networks:
       - hermes-postgres-network
 
@@ -81,7 +99,7 @@ services:
     image: adminer:4.8.1
     restart: unless-stopped
     ports:
-      - 8081:8080
+      - "8081:8080"
     depends_on:
       - feedback-postgres
       - hermes-postgres

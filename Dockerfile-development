@@ -1,23 +1,37 @@
-FROM golang:1.22-alpine3.20
+FROM golang:1.22 AS builder
 
 ARG service_name
 
 WORKDIR /app
 
-COPY go.mod go.sum ./
+COPY go.mod go.sum Makefile ./
+RUN make dep
 
-RUN go mod download
-RUN go install github.com/go-swagger/go-swagger/cmd/swagger@v0.31.0
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go install github.com/go-swagger/go-swagger/cmd/swagger@v0.31.0
 
 COPY . .
+RUN make build SERVICE_NAME=$service_name
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o ./core/database/migrations/tool/bin/migration-tool ./core/database/migrations/tool/main/.
-RUN CGO_ENABLED=0 GOOS=linux go build -o ./bin/$service_name ./services/$service_name/app/.
+#make temp migrations dir
+RUN mkdir -p /app/services/${service_name}/migrations
 
 #RUN addgroup -g 1000 appgroup
 #RUN adduser -D -u 1000 appuser -G appgroup
 #USER appuser
 
+
+FROM alpine:3.20
+
+ARG service_name
 ENV SERVICE_NAME=$service_name
 
-ENTRYPOINT ["sh", "-c", "./bin/$SERVICE_NAME"]
+WORKDIR /app
+RUN mkdir -p /app/docs
+
+COPY --from=builder /app/bin/${service_name} /app/${service_name}
+COPY --from=builder /app/services/${service_name}/migrations /app/services/${service_name}/migrations
+
+COPY --from=builder /app/docs/swagger.json /app/docs/swagger.json
+COPY --from=builder /go/bin/swagger /usr/local/bin/swagger
+
+ENTRYPOINT ["sh", "-c", "./$SERVICE_NAME"]

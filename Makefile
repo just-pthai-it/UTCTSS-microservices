@@ -6,8 +6,8 @@ export PATH := $(BIN_DIR):$(PATH)
 BUILD_DIR := $(CURDIR)/build
 .PHONY: build
 build:
-	CGO_ENABLED=0 GOOS=linux go build -o ./core/database/migrations/tool/bin/migration-tool ./core/database/migrations/tool/main/.
-	CGO_ENABLED=0 GOOS=linux go build -o ./bin/$(SERVICE_NAME) ./services/$(SERVICE_NAME)/app/.
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ./core/database/migrations/tool/bin/migration-tool ./core/database/migrations/tool/main/.
+	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o ./bin/$(SERVICE_NAME) ./services/$(SERVICE_NAME)/app/.
 
 .PHONY: dep
 dep:

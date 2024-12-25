@@ -54,7 +54,7 @@ jobs:
         with:
           file: Dockerfile-development
           push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/utconnect-${{ matrix.service.service-name }}:dev-v1
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/utconnect-go-${{ matrix.service.service-name }}:dev-v1
           build-args: |
             service_name=${{ matrix.service.service-name }}
 

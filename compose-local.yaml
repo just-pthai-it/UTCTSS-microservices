@@ -1,6 +1,6 @@
 services:
-  docs:
-    container_name: docs
+  my-swagger:
+    container_name: my-swagger
     env_file:
       - .env
     build:
@@ -8,7 +8,7 @@ services:
       dockerfile: Dockerfile-local
     restart: unless-stopped
     environment:
-      SERVICE_NAME: docs
+      SERVICE_NAME: my-swagger
     ports:
       - "8000:2000"
     volumes:

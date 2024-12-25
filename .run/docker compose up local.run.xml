@@ -16,6 +16,7 @@
             </DockerEnvVarImpl>
           </list>
         </option>
+        <option name="commandLineOptions" value="--build" />
         <option name="sourceFilePath" value="compose-local.yaml" />
         <option name="upDetach" value="false" />
         <option name="upRemoveOrphans" value="true" />
